@@ -174,3 +174,65 @@ with st.expander("Consultar las dependencias incluidas"):
 
 st.divider()
 st.caption("Prototipo académico. Las dependencias y reglas son de referencia y deben adaptarse a la estructura de cada entidad.")
+st.info(
+    "Módulo académico para registrar y consultar peticiones. "
+    "Utilice únicamente datos simulados mientras se configura "
+    "la conexión segura con la base de datos."
+)
+
+st.subheader("Registrar una nueva petición")
+
+with st.form("formulario_radicado"):
+    numero_radicado = st.text_input(
+        "Número de radicado",
+        placeholder="Ejemplo: RAD-2026-001"
+    )
+
+    fecha_recepcion = st.date_input(
+        "Fecha de recepción"
+    )
+
+    asunto_registro = st.text_area(
+        "Asunto de la petición",
+        placeholder="Escriba el asunto que se va a registrar"
+    )
+
+    dependencias_disponibles = list(REGLAS.keys()) + ["Revisión manual"]
+
+    dependencia_registro = st.selectbox(
+        "Dependencia responsable",
+        options=dependencias_disponibles
+    )
+
+    estado_registro = st.selectbox(
+        "Estado de la petición",
+        options=[
+            "Recibida",
+            "En trámite",
+            "Enviada",
+            "Respondida",
+            "Cerrada"
+        ]
+    )
+
+    guardar_radicado = st.form_submit_button(
+        "Guardar radicado",
+        use_container_width=True
+    )
+
+if guardar_radicado:
+    if not numero_radicado.strip():
+        st.warning("Escriba el número de radicado.")
+    elif not asunto_registro.strip():
+        st.warning("Escriba el asunto de la petición.")
+    else:
+        st.warning(
+            "El formulario está preparado, pero todavía no guarda "
+            "registros en Supabase. Debemos completar la conexión "
+            "y los permisos antes de habilitar el guardado."
+        )
+  st.warning(
+            "El formulario está preparado, pero todavía no guarda "
+            "registros en Supabase. Debemos completar la conexión "
+            "y los permisos antes de habilitar el guardado."
+        )

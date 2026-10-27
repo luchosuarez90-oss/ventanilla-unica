@@ -231,8 +231,4 @@ if guardar_radicado:
             "registros en Supabase. Debemos completar la conexión "
             "y los permisos antes de habilitar el guardado."
         )
-  st.warning(
-            "El formulario está preparado, pero todavía no guarda "
-            "registros en Supabase. Debemos completar la conexión "
-            "y los permisos antes de habilitar el guardado."
-        )
+

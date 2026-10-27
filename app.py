@@ -226,9 +226,32 @@ if guardar_radicado:
     elif not asunto_registro.strip():
         st.warning("Escriba el asunto de la petición.")
     else:
-        st.warning(
-            "El formulario está preparado, pero todavía no guarda "
-            "registros en Supabase. Debemos completar la conexión "
-            "y los permisos antes de habilitar el guardado."
-        )
+        try:
+            from supabase import create_client
 
+            url = st.secrets["SUPABASE_URL"]
+            clave = st.secrets["SUPABASE_KEY"]
+            supabase = create_client(url, clave)
+
+            registro = {
+                "numero_radicado": numero_radicado.strip(),
+                "fecha_recepcion": fecha_recepcion.isoformat(),
+                "asunto": asunto_registro.strip(),
+                "dependencia": dependencia_registro,
+                "estado": estado_registro,
+            }
+
+            respuesta = (
+                supabase.table("radicados")
+                .insert(registro)
+                .execute()
+            )
+
+            st.success("¡Radicado guardado correctamente en Supabase!")
+
+        except Exception as error:
+            st.error(
+                "No fue posible guardar el radicado. "
+                "Verifique la conexión y los permisos de Supabase."
+            )
+            st.caption(f"Detalle técnico: {error}")
